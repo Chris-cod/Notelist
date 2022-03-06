@@ -1,37 +1,86 @@
 import React, {useEffect, useState} from 'react'
 //import notes from '../assets/data'
-import {useParams, Link} from "react-router-dom"
+import {useParams,Link} from "react-router-dom"
 import {ReactComponent as Arrowleft} from '../assets/arrow-left.svg'
 
 
 
-const NotePage = () => {
-    const params = useParams()
+const NotePage = ({history}) => {
+    let params = useParams()
     let noteId = params.id
 
     //let note = notes.find(note => note.id === Number(noteId))
     let [note, setNote] = useState(null)
 
     useEffect(() => {
-        getNote()
+        let getNote = async () => {
+            if(noteId === 'new') return
+            let response = await fetch(`http://localhost:8000/notes/${noteId}`)
+            let data = await response.json()
+            setNote(data) 
+        }
+        getNote()  
     }, [noteId])
 
-    let getNote = async () => {
-        let response = await fetch (`http://localhost:8000/notes/${noteId}`)
-        let data = await response.json()
-        setNote(data)
+    let createNote = async () => {
+        await fetch(`http://localhost:8000/notes/`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({...note, 'updated': new Date() })
+        })
     }
+
+    let updateNote = async () => {
+        await fetch(`http://localhost:8000/notes/${noteId}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({...note, 'updated': new Date() })
+        })
+    }
+
+    let deleteNote = async () => {
+        await fetch(`http://localhost:8000/notes/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(note)
+        })
+        history.push('/')
+    }
+    
+    let handleSubmit = () => {
+        if(noteId !== 'new' && !note.body){
+            deleteNote()
+        }else if(noteId !== 'new'){
+            updateNote()
+        }else if(noteId === 'new' && note !== null){
+            createNote()
+        }
+        history.push('/')
+    }
+        
 
     return (
         <div className="note">
             <div className="note-header">
                 <h3>
                     <Link to= "/" >
-                        <Arrowleft />
+                        <Arrowleft onClick={handleSubmit} />
                     </Link>
                 </h3>
+                {noteId !== 'new' ? (
+                    <button onClick={deleteNote}>Delete</button>
+                ) : (
+                    <button onClick={handleSubmit}>Done</button>
+                )}
+                
             </div>
-            <textarea value={note?.body}>
+            <textarea onChange = {(e) => {setNote({...note, 'body':e.target.value})}} value={note?.body}>
 
             </textarea>
         </div>

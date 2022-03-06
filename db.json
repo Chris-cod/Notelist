@@ -1,19 +1,24 @@
 {
   "notes": [
-      {
-        "id": 1,
-        "body" : "Todays Agenda \n\n -wakeup and wash the tees\n -eat patatos salats\n- watch animes. ",
-        "updated" : "30-12-2021"
+    {
+      "body": "new note\n- baiting",
+      "updated": "2022-03-06T22:58:59.066Z",
+      "id": 3
     },
     {
-        "id": 2,
-        "body" : "Tomorows Agenda \n\n -wakeup and wash the tees\n -travels to meet friend\n- back and cook a fish. ",
-        "updated" : "30-12-2021"
+      "body": "prevent the new job",
+      "updated": "2022-03-06T23:03:32.454Z",
+      "id": 5
     },
     {
-        "id": 3,
-        "body" : "First days of the new year \n\n -wakeup and wash the tees\n -try to cook someting \n- calls family and Friend to wish happy new Year. ",
-        "updated" : "30-12-2021"
+      "body": "finish tuto",
+      "updated": "2022-03-06T23:04:32.458Z",
+      "id": 6
+    },
+    {
+      "body": "done turo\n-baiting",
+      "updated": "2022-03-06T23:09:03.341Z",
+      "id": 7
     }
   ]
 }
